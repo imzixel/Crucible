@@ -28,12 +28,10 @@ jobs:
       env:
         USERNAME: ${{ github.actor }}
         TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: Create Release
-      uses: softprops/action-gh-release@v1
+    - name: Compress
+      run: tar -cvf build.tar *
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v2
       with:
-        tag_name: dev-${{ github.sha }}
-        prerelease: true
-        name: Dev build ${{ github.sha }}
-        files: |
-          build/distributions/libraries.zip
-          build/distributions/*-server.jar
+        name: Crucible Artifact
+        path: build.tar
